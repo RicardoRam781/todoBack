@@ -7,7 +7,7 @@ const getTodo = async (id) =>{
     return await query.getById(id);
 }
 const addTodo = async (task) => {
-
+    console.log("task",task)
     if(task.body.length <= 0){
         return null
     }
@@ -21,12 +21,17 @@ const addTodo = async (task) => {
     
 }
 const updateTodo = async (task,id) =>{
-
-    if(task.body.length <= 0){
-        return null
+    let result = 0
+    if(task.body?.length >= 0){
+         result = await query.updateTodo(task.body,id)
+       
     }
-    const result = await query.updateTodo(task.body,task.status,id)
-    if(result >0)
+    if(task.status != null){
+         result = await query.changeStatus(task.status,id)
+    }
+    console.log("ress",result)
+    if(result > 0)
+        
         return result
     else 
         return null

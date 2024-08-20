@@ -13,10 +13,10 @@ const addTodo = (req,res) =>{
     const todo = toDoService.addTodo(req.body)
     console.log("todo", todo)
     if(todo){
-        res.status(201).send("Created")
+        res.status(201).json("Created")
         
     } else{
-        res.status(500).send("Internal error")
+        res.status(500).json("Internal error")
     }
 }
 const updateTodo = async (req,res) =>{
@@ -30,9 +30,9 @@ const updateTodo = async (req,res) =>{
 const deleteTodo = (req,res) =>{
     const todoDelete = toDoService.deleteTodo(req.params.id)
     if(todoDelete){
-        res.status(204).send("deleted")
+        res.status(204).json("deleted")
     } else {
-        res.status(500).send("Internal error")
+        res.status(500).json("Internal error")
     }
 }
 

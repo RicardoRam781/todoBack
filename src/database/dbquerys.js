@@ -7,7 +7,7 @@ async function add(body,status){
 }
 
 async function getAll(){
-    const result = await pool.query('SELECT * FROM todo')
+    const result = await pool.query('SELECT * FROM todo ORDER BY id DESC')
     return result.rows
 }
 async function getById(id){
@@ -15,9 +15,13 @@ async function getById(id){
     return result.rows
 }
 
-async function updateTodo(body,status,id){
-    const result = await pool.query(`UPDATE todo SET body = $1, status = $2 WHERE id = $3`,[body, status, id])
+async function updateTodo(body,id){
+    const result = await pool.query(`UPDATE todo SET body = $1 WHERE id = $2`,[body,id])
    return result.rowCount
+}
+async function changeStatus(status,id){
+    const result = await pool.query('UPDATE todo SET status = $1 WHERE id = $2',[status,id])
+    return result.rowCount
 }
 
 async function deleteTodo(id){
@@ -30,6 +34,7 @@ module.exports = {
     getAll,
     getById,
     updateTodo,
+    changeStatus,
     deleteTodo
 }
 

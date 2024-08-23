@@ -15,4 +15,5 @@ app.use("",router);
 
 app.listen(port, () => {
     console.log(`Listeting in http://localhost:${port}`)
+   console.log("PROD URL",process?.env?.DEPLOYMENT_UR)
 })

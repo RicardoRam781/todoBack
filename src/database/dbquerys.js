@@ -29,12 +29,58 @@ async function deleteTodo(id){
     return result.rowCount
 }
 
+async function syncData(taskList){
+    const todosInDb = await getAll();
+    const idToSave = [];
+    
+    taskList.map((item) =>{
+        todosInDb.map((element) => {
+            if(item.id == element.id){
+                if(item?.body != element.body){
+                    element.body = item.body
+                    
+
+                } else if(item.status != element.status){
+                    element.status = item.status
+                    
+                }
+                idToSave.push(item.id)
+            } 
+           
+        });
+        
+    }) 
+    let idToDelete =  todosInDb.filter(element => !idToSave.includes(element.id))
+    let taskToAdd = taskList.filter(task =>
+        !todosInDb.some(res => res.id === task.id)
+      );
+      if(taskToAdd.length > 0){
+        taskToAdd.map(async (element )=> {
+            await add(element.body, false)
+        });
+        
+      }
+   
+   if(idToDelete.length >0){
+    idToDelete.map(async (item) => {
+        await deleteTodo(item.id)
+    }) 
+   }
+    todosInDb.map(async (item,index) =>{
+        let result = await pool.query('UPDATE todo SET body = $1, status = $2 WHERE id = $3',[item.body, item.status, item.id])
+    })
+    return true
+
+    //console.log("RESULT",todosInDb,"TASKLIST", taskList,"IDSave", idToSave)    
+}
+
 module.exports = {
     add,
     getAll,
     getById,
     updateTodo,
     changeStatus,
-    deleteTodo
+    deleteTodo,
+    syncData
 }
 

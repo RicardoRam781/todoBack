@@ -36,10 +36,22 @@ const deleteTodo = (req,res) =>{
     }
 }
 
+const syncData = (req,res) =>{
+    const result = toDoService.syncData(req.body)
+    if(result){
+        console.log("returning", 201)
+        res.status(201)
+    } else {
+        res.status(500)
+    }
+    
+}
+
 module.exports = { 
     getAll,
     getTodo,
     addTodo,
     updateTodo,
-    deleteTodo
+    deleteTodo,
+    syncData
 }

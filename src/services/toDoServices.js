@@ -44,11 +44,19 @@ const deleteTodo = async (id) =>{
     else 
         return false
 }
+const syncData = async (taskList) =>{
+    const result = await query.syncData(taskList)
+    if(result )
+        return true
+    else 
+        return false
+}
 
 module.exports = { 
     getAll,
     getTodo,
     addTodo,
     updateTodo,
-    deleteTodo
+    deleteTodo,
+    syncData
 }

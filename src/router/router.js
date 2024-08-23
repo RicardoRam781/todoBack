@@ -13,6 +13,8 @@ router.route("/update/:id").put(toDoController.updateTodo)
 
 router.route("/delete/:id").delete(toDoController.deleteTodo)
 
+router.route("/syncData").post(toDoController.syncData)
+
 //user enpoints
 
 router.route("/add/user").post()

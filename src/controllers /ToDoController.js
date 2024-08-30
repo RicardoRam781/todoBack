@@ -61,13 +61,19 @@ const deleteTodo = (req, res) => {
         res.status(500).json("Internal error")
     }
 }
-let sync = false;
+
 const syncData = (req, res) => {
-    if (sync) {
-        return res.status(429).send({ message: "Another sync is in progress" });
+   
+    const currentTime = Date.now();
+    const timeSinceLastRequest = currentTime - lastRequestTime;
+  
+    if (timeSinceLastRequest < 3000) {
+      res.setHeader('Retry-After', 3);
+      return res.status(429).send({ message: "Too many requests. Retry after 5 seconds" });
     }
-    sync = true;
-    try {
+  
+    lastRequestTime = currentTime;
+   
         const token = getToken(req)
         if (!token) {
             res.status(401).json('Not autorized')
@@ -79,12 +85,8 @@ const syncData = (req, res) => {
         } else {
             res.status(500)
         }
-    }
-     catch (err) {
-        console.log(err)
-    }finally {
-        sync = false;
-      }
+    
+    
 
 
 }

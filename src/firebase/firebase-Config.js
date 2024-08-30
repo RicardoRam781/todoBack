@@ -3,7 +3,7 @@ require('dotenv').config();
 
 const config = require('../config')
 
-var serviceAccount = process.env.GOOGLE_CLOUD_CREDENTIALS
+var serviceAccount = JSON.parse(process.env.GOOGLE_CLOUD_CREDENTIALS)
 admin.initializeApp({
   credential: admin.credential.cert(serviceAccount)
 });

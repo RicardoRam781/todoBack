@@ -62,6 +62,7 @@ const deleteTodo = (req, res) => {
     }
 }
 
+let lastRequestTime = 0;
 const syncData = (req, res) => {
    
     const currentTime = Date.now();

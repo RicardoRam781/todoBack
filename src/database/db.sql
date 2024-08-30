@@ -6,7 +6,14 @@ CREATE TABLE todo(
 
 CREATE TABLE users(
     id SERIAL PRIMARY KEY,
-    name VARCHAR(100),
-    email VARCHAR(100),
-    password VARCHAR(255)
-)
+    uid TEXT,
+    email VARCHAR(255)
+);
+
+ALTER TABLE todo 
+ADD COLUMN id_user INT ;
+
+ALTER TABLE todo
+ADD CONSTRAINT id_user
+FOREIGN KEY (id_user)
+REFERENCES users(id);

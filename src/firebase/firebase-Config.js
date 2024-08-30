@@ -1,7 +1,9 @@
 var admin = require("firebase-admin");
+require('dotenv').config();
 
-var serviceAccount = require("./todolist-31663-firebase-adminsdk-vh9m7-437746e4a3.json");
+const config = require('../config')
 
+var serviceAccount = process.env.GOOGLE_CLOUD_CREDENTIALS
 admin.initializeApp({
   credential: admin.credential.cert(serviceAccount)
 });

@@ -9,7 +9,8 @@ const config = {
     DB_PASSWORD: process.env.POSTGRES_PASSWORD || 'Loquillo39',
     DB_NAME: process.env.PGDATABASE || 'todolist',
     DB_PORT : process.env.PGPORT || 5432,
-  
+    GOOGLE_SECRET : process.env.GOOGLE_SECRET,
+    DANITO : process.env.DANITO
 }
 
 module.exports = config;
